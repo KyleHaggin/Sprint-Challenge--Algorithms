@@ -97,8 +97,8 @@ class SortingRobot:
     def sort(self):
         """
         Sort the robot's list.
-        Current best is compare4
-        Current best without breaking rules is compare3
+        Current best is compare5
+        Current best without breaking rules is compare5
         """
         import sys
         sys.setrecursionlimit(1000000000)
@@ -227,7 +227,7 @@ class SortingRobot:
 
     def compare5(self):
         self.set_light_off()
-        for i in range(150):
+        for i in range(1000000):
             while self.can_move_right() is True:
                 self.swap_item()
                 self.move_right()
