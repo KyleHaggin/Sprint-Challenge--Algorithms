@@ -100,7 +100,7 @@ class SortingRobot:
         """
         import sys
         sys.setrecursionlimit(1000000000)
-        self.compare3()
+        self.compare4()
 
     def compare1(self):
         # Check if able to move right, if so pick up item and move right
@@ -150,7 +150,7 @@ class SortingRobot:
         if self.light_is_on() is True:
             while self.can_move_left() is True:
                 self.move_left()
-            self.compare2()
+            return self.compare2()
         else:
             return
 
@@ -170,10 +170,6 @@ class SortingRobot:
                 self.move_left()
                 self.swap_item()
                 self.move_right()
-            elif self.compare_item() is None:
-                pass
-            else:
-                print(f'Error{self._item}')
 
         while self.can_move_left() is True:
             self.swap_item()
@@ -192,9 +188,41 @@ class SortingRobot:
         if self.light_is_on() is False:
             return
         else:
-            self.compare3()
+            print('re')
+            return self.compare3()
 
+    def compare4(self):
+        self.set_light_off()
+        for i in range(len(self._list)):
+            for x in range(len(self._list)-i-1):
+                self.swap_item()
+                self.move_right()
+                if self.compare_item() == 1:
+                    self.swap_item()
+                    self.set_light_on()
+                self.move_left()
+                self.swap_item()
+                self.move_right()
+        if self.light_is_on() is True:
+            self.set_light_off()
+        else:
+            return
 
+        for i in range(len(self._list)):
+            for x in range(len(self._list)-i-1):
+                self.swap_item()
+                self.move_left()
+                if self.compare_item() == -1:
+                    self.swap_item()
+                    self.set_light_on()
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+        if self.light_is_on() is True:
+            self.set_light_off()
+            return self.compare2()
+        else:
+            return
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
