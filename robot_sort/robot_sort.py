@@ -81,11 +81,13 @@ class SortingRobot:
         Turn on the robot's light
         """
         self._light = "ON"
+
     def set_light_off(self):
         """
         Turn off the robot's light
         """
         self._light = "OFF"
+
     def light_is_on(self):
         """
         Returns True if the robot's light is on and False otherwise.
@@ -96,9 +98,66 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        import sys
+        sys.setrecursionlimit(1000000000)
+        self.compare2()
 
+    def move_all_left(self):
+        # print(self._list)
+        while self.move_left() is True:
+            self.move_left()
+        self.set_light_off()
+        return
+
+    def compare(self):
+        # Check if able to move right, if so pick up item and move right
+        # If cant, check light if list is sorted
+        # Else start at beginning
+        if self.can_move_right() is True:
+            # print(self._time)
+            self.swap_item()
+            self.move_right()
+        elif self.light_is_on() is False:
+            return
+        else:
+            self.move_all_left()
+
+        # Begin comparisons
+        if self.compare_item() == -1:
+            self.move_left()
+            self.swap_item()
+            self.move_right()
+        elif self.compare_item() == 0 or self.compare_item() == 1:
+            self.set_light_on()
+            self.swap_item()
+            self.move_left()
+            self.swap_item()
+            self.move_right()
+        elif self.compare_item() is None:
+            print(f'None error in item. {self._item}')
+        else:
+            print(f'Error{self._item}')
+
+        self.compare()
+
+    def compare2(self):
+        self.set_light_off()
+        for i in range(len(self._list)):
+            for x in range(len(self._list)-i-1):
+                self.swap_item()
+                self.move_right()
+                if self.compare_item() == 1:
+                    self.swap_item()
+                    self.set_light_on()
+                self.move_left()
+                self.swap_item()
+                self.move_right()
+        if self.light_is_on() is True:
+            while self.can_move_left() is True:
+                self.move_left()
+            self.compare2()
+        else:
+            return
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
