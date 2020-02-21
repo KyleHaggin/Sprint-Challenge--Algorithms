@@ -102,25 +102,20 @@ class SortingRobot:
         sys.setrecursionlimit(1000000000)
         self.compare2()
 
-    def move_all_left(self):
-        # print(self._list)
-        while self.move_left() is True:
-            self.move_left()
-        self.set_light_off()
-        return
-
     def compare(self):
         # Check if able to move right, if so pick up item and move right
         # If cant, check light if list is sorted
         # Else start at beginning
         if self.can_move_right() is True:
-            # print(self._time)
             self.swap_item()
             self.move_right()
         elif self.light_is_on() is False:
             return
         else:
-            self.move_all_left()
+            if self.light_is_on() is True:
+                while self.can_move_left() is True:
+                    self.move_left()
+                self.compare()
 
         # Begin comparisons
         if self.compare_item() == -1:
@@ -134,7 +129,7 @@ class SortingRobot:
             self.swap_item()
             self.move_right()
         elif self.compare_item() is None:
-            print(f'None error in item. {self._item}')
+            pass
         else:
             print(f'Error{self._item}')
 
