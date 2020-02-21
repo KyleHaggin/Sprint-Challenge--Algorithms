@@ -2,6 +2,7 @@ import unittest
 import random
 from robot_sort import SortingRobot
 
+
 class Test(unittest.TestCase):
 
     def setUp(self):
@@ -12,26 +13,31 @@ class Test(unittest.TestCase):
         self.random_list = [random.randint(0, 100) for i in range(0, 100)]
 
     def test_sorting_small_list(self):
+        print('small')
         robot = SortingRobot(self.small_list)
         robot.sort()
         self.assertEqual(robot._list, sorted(self.small_list))
 
     def test_sorting_medium_list(self):
+        print('medium')
         robot = SortingRobot(self.medium_list)
         robot.sort()
         self.assertEqual(robot._list, sorted(self.medium_list))
 
     def test_sorting_large_list(self):
+        print('large')
         robot = SortingRobot(self.large_list)
         robot.sort()
         self.assertEqual(robot._list, sorted(self.large_list))
 
     def test_sorting_large_varied_list(self):
+        print('large varied')
         robot = SortingRobot(self.large_varied_list)
         robot.sort()
         self.assertEqual(robot._list, sorted(self.large_varied_list))
 
     def test_sorting_random_list(self):
+        print('random')
         robot = SortingRobot(self.random_list)
         robot.sort()
         self.assertEqual(robot._list, sorted(self.random_list))

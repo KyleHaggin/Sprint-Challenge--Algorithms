@@ -97,10 +97,12 @@ class SortingRobot:
     def sort(self):
         """
         Sort the robot's list.
+        Current best is compare4
+        Current best without breaking rules is compare3
         """
         import sys
         sys.setrecursionlimit(1000000000)
-        self.compare4()
+        self.compare5()
 
     def compare1(self):
         # Check if able to move right, if so pick up item and move right
@@ -188,7 +190,6 @@ class SortingRobot:
         if self.light_is_on() is False:
             return
         else:
-            print('re')
             return self.compare3()
 
     def compare4(self):
@@ -220,9 +221,33 @@ class SortingRobot:
                 self.move_left()
         if self.light_is_on() is True:
             self.set_light_off()
-            return self.compare2()
+            return self.compare4()
         else:
             return
+
+    def compare5(self):
+        self.set_light_off()
+        for i in range(150):
+            while self.can_move_right() is True:
+                self.swap_item()
+                self.move_right()
+                if self.compare_item() == 1:
+                    self.swap_item()
+                    self.set_light_on()
+                self.move_left()
+                self.swap_item()
+                self.move_right()
+            while self.can_move_left() is True:
+                self.move_left()
+            for x in range(i):
+                self.move_right()
+                if self.can_move_right() is False and self.light_is_on() is False:
+                    return
+                elif self.can_move_right() is False:
+                    while self.can_move_left() is True:
+                        self.move_left()
+                    self.compare5()
+
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
